@@ -10,7 +10,7 @@ module ActiveRecord
         def acts_as_opengraph(options = {})
           # don't allow multiple calls
           return if included_modules.include? InstanceMethods
-
+          return unless table_exists?
           extend ClassMethods
 
           opengraph_atts = %w(title type image url description site_name latitude longitude street_address locality region postal_code country_name email phone_number fax_number)
