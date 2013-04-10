@@ -10,7 +10,7 @@ module ActsAsOpengraphHelper
     raise(ArgumentError.new, "You need to call acts_as_opengraph on your #{obj.class} model") unless obj.respond_to?(:opengraph_data)
     tags = obj.opengraph_data.map do |att|
       att_name = att[:name] == "og:site_name" ? att[:name] : att[:name].dasherize
-      %(<meta property="#{att_name}" content="#{att[:value]}"/>)
+      tag(:meta, :content => att[:value], :property => att_name)
     end
     tags = tags.join("\n")
     tags.respond_to?(:html_safe) ? tags.html_safe : tags
