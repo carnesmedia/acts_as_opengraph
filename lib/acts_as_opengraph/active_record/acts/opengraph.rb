@@ -13,7 +13,7 @@ module ActiveRecord
           return unless table_exists?
           extend ClassMethods
 
-          opengraph_atts = %w(title type image url description site_name latitude longitude street_address locality region postal_code country_name email phone_number fax_number)
+          opengraph_atts = %w(title type image url description site_name latitude longitude street_address locality region postal_code country_name email phone_number fax_number video audio)
 
           options[:columns] ||= {}
           options[:values] ||= {}
@@ -50,11 +50,11 @@ module ActiveRecord
         # @return [Array] A list of possible names for the given opengraph attribute
         def alternative_names_for(att_name)
           case att_name
-            when :og_title          then [:title, :name]
+            when :og_title          then [:title, :name, :to_s]
             when :og_type           then [:kind, :category]
             when :og_image          then [:image, :photo, :thumb, :featured, :ticket, :checkout, :slider, :large]
             when :og_url            then [:url, :uri, :link]
-            when :og_description    then [:description, :summary]
+            when :og_description    then [:description, :summary, :short_description]
             when :og_site_name      then [:site, :website, :web]
             when :og_latitude       then [:latitude]
             when :og_longitude      then [:longitude]
@@ -66,6 +66,8 @@ module ActiveRecord
             when :og_email          then [:email, :mail]
             when :og_phone_number   then [:phone_number, :phone]
             when :og_fax_number     then [:fax_number, :fax]
+            when :og_video          then [:video, :video_url, :youtube_url]
+            when :og_audio          then [:audio, :audio_url]
             else []
           end
         end
